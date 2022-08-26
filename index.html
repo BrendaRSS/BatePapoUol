@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="top">
+        <div class="uolimg"><img src="./uol.jpg"></div>
+        <div class="profile" onclick="apareceSidebar()"><ion-icon name="people"></ion-icon></div>
+    </div>
+
+    <div class="chat">
+        <ul class="ul-chat">
+            <li>
+                <div class="message entrouOuSaiu">
+                    <span ><strong class="hora">(09:21:45)</strong> <b> João </b> entra na sala...</span>
+                </div>
+            </li>
+
+            <li>    
+                <div class="message">
+                    <p><strong class="hora">(09:22:28)</strong> <b> João </b> para <b>Todos:</b> Bom dia</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="message">
+                    <span> <strong class="hora">(09:22:38)</strong>  <b> Maria </b> para <b>João:</b> Oi João :)</span>
+                </div>
+            </li>
+
+            <li>
+                <div class="message reservada">
+                    <span><strong class="hora">(09:22:48)</strong> <b> João </b> reservadamente para <b>Maria:</b> Oi gatinha quer tc?</span>
+                </div>
+            </li>
+
+            <li>
+                <div class="message entrouOuSaiu">
+                    <span><strong class="hora">(09:22:58)</strong> <b> Maria </b> sai da sala...</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="textField">
+        <input type="text" placeholder="Escreva aqui...">
+        <!-- <div class="enter"><ion-icon name="paper-plane-outline"></ion-icon></div> -->
+        <button type="submit" onclick="adicionarMensagem()"><ion-icon name="paper-plane-outline"></ion-icon></button>
+    </div>
+
+    <div class="sidebar none" onclick="sumirSidebar()">
+        <div class="menusidebar">
+            <div class="textoDoTopo">Escolha um contato<br> para enviar mensagem:</div>
+            <div class="contatos">
+                <span class="todos"><ion-icon name="people"></ion-icon> Todos</span>
+                <span class="contato-privado"><ion-icon name="person-circle"></ion-icon> João</span>
+                <span class="contato-privado"><ion-icon name="person-circle"></ion-icon> Maria <span class="check"><ion-icon name="checkmark"></ion-icon></span></ion-icon></span>
+            </div>
+            <div class="EscolhaDavisibilidade">Escolha a visibilidade:</div>
+            <div class="visibilidade">
+                <span class="publico"><ion-icon name="lock-open"></ion-icon> Público</span>
+                <span class="privado"><ion-icon name="lock-closed"></ion-icon> Reservadamente <span class="check"><ion-icon name="checkmark"></span></ion-icon></span>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
