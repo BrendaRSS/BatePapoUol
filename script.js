@@ -1,9 +1,25 @@
 
 let nomeEscolhido= prompt('Digite seu nick name:');
-while(nomeEscolhido.length<3){
-    nomeEscolhido= prompt('Digite seu nick name:');
+function escolherNome(){
+    while(nomeEscolhido.length<3){
+        nomeEscolhido= prompt('Digite seu nick name:');
+    }
+    
+    let promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', {name: nomeEscolhido});
+    promise.then(deucerto);
+    promise.catch(mostrarErro);
+
 }
 
+escolherNome();
+
+function envioIntermitenteDeFunction(){
+    let secondPromise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', {name: nomeEscolhido});
+ }
+
+function deucerto(){
+    setInterval(envioIntermitenteDeFunction, 3000);
+ }
 
 let ulChat= document.querySelector('.ul-chat');
 let sidebar= document.querySelector('.sidebar');
@@ -11,6 +27,7 @@ let sidebar= document.querySelector('.sidebar');
 function apareceSidebar() {
     sidebar.classList.remove('none');
 }
+
 function sumirSidebar(){
     sidebar.classList.add('none');
 }
@@ -28,9 +45,9 @@ setInterval(buscarMessagens, 3000);
 function mensagensChegaram(resposta){
     listaDeMensagens= [];
     listaDeMensagens=resposta.data;
-    console.log(listaDeMensagens);
+    //console.log(listaDeMensagens);
     ulChat.innerHTML ='';
-    console.log(ulChat.innerHTML);
+    //console.log(ulChat.innerHTML);
     for(i=0; i<listaDeMensagens.length; i++){
         if (listaDeMensagens[i].type === "status"){
             ulChat.innerHTML +=  
@@ -58,7 +75,7 @@ function mensagensChegaram(resposta){
                 </li>`;
         }
     }
-        console.log(ulChat.innerHTML.length);
+        //console.log(ulChat.innerHTML.length);
 
 }
 
@@ -66,25 +83,26 @@ function mostrarErro(erro){
     console.log(erro.response);
 }
 
-
-let nomeDoUsuario = '';
-let nomeDoDestinatario= '';
+//let nomeDoUsuario = nomeEscolhido;
+//let nomeDoDestinatario= "Todos";
 let mensagemDigitada= document.querySelector('input');
-let statusMessage= '';
+//let statusMessage= "message";
 
 function adicionarMensagem(){
-    let novaMensagem = {
-        from: "nome do usuário",
-        to: "nome do destinatário (Todos se não for um específico)",
-        text: "mensagem digitada",
-        type: "message" // ou "private_message" para o bônus
-    }
-    listaDeMensagens.push(
-    {
-        from: "nome do usuário",
-        to: "nome do destinatário (Todos se não for um específico)",
-        text: "mensagem digitada",
-        type: "message" // ou "private_message" para o bônus
-    }
-    )
+
+  let segundaPromessa= axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', {from: nomeEscolhido,
+    to: "Todos",
+    text: mensagemDigitada.value,
+    type: "message",
+    });
+    segundaPromessa.then(buscarMessagens);
+    segundaPromessa.catch(mostrarErro);
 }
+
+let ultimaMSG = ulChat.lastElementChild;
+console.log(ultimaMSG);
+
+//function scrollToBottom() {
+  //element.scrollIntoView(false);
+//}
+
