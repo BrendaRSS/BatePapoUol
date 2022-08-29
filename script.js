@@ -7,7 +7,7 @@ function escolherNome(){
     
     let promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', {name: nomeEscolhido});
     promise.then(deucerto);
-    promise.catch(mostrarErro);
+    promise.catch(mostrarErroNome);
 
 }
 
@@ -40,15 +40,15 @@ function buscarMessagens(){
 }
 
 setInterval(buscarMessagens, 3000);
-//buscarMessagens();
+
 
 let ultimaMSG='';
 function mensagensChegaram(resposta){
     listaDeMensagens= [];
     listaDeMensagens=resposta.data;
-    //console.log(listaDeMensagens);
+    
     ulChat.innerHTML ='';
-    //console.log(ulChat.innerHTML);
+    
     for(i=0; i<listaDeMensagens.length; i++){
         if (listaDeMensagens[i].type === "status"){
             ulChat.innerHTML +=  
@@ -60,7 +60,7 @@ function mensagensChegaram(resposta){
         }
 
         else if (listaDeMensagens[i].type === "private_message"){
-            if(listaDeMensagens[i].to === nomeEscolhido){
+            if("private_message" === nomeEscolhido){
                 ulChat.innerHTML +=  
                     ` <li>
                         <div class="message reservada">
@@ -78,20 +78,42 @@ function mensagensChegaram(resposta){
                 </li>`;
         }
     }
-        //console.log(ulChat.innerHTML.length);
+        
         ultimaMSG = ulChat.lastElementChild;
         console.log(ultimaMSG);
         ativarRolagem();
 }
 
 function mostrarErro(erro){
-    console.log(erro.response);
+    if(erro.response.status=== 404){
+        alert("O servidor não pode encontrar o recurso solicitado. Esse link não está disponível ou não existe.");
+    }
+    if(erro.response.status=== 400){
+        alert("Campo vazio ou usuário ausente.");
+        window.location.reload();
+    }
 }
 
-//let nomeDoUsuario = nomeEscolhido;
-//let nomeDoDestinatario= "Todos";
+function mostrarErroNome(erroNome){
+    if(erroNome.response.status=== 409){
+        alert("Esse nome já está em uso. Por favor, escolha outro nome.");
+        escolherNome();
+    }
+    if(erroNome.response.status=== 404){
+        alert("O servidor não pode encontrar o recurso solicitado. Esse link não está disponível ou não existe.");
+    }
+    if(erroNome.response.status=== 400){
+        alert("Sintaxe inválida. Por favor, verifique o que digitou.");
+    }
+    if(erroNome.response.status=== 400){
+        alert("Campo vazio. Por favor, digite um nome válido.");
+        escolherNome();
+    }
+}
+
+
 let mensagemDigitada= document.querySelector('input');
-//let statusMessage= "message";
+
 
 function adicionarMensagem(){
 
