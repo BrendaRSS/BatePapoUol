@@ -42,6 +42,7 @@ function buscarMessagens(){
 setInterval(buscarMessagens, 3000);
 //buscarMessagens();
 
+let ultimaMSG='';
 function mensagensChegaram(resposta){
     listaDeMensagens= [];
     listaDeMensagens=resposta.data;
@@ -58,15 +59,17 @@ function mensagensChegaram(resposta){
                 </li>`;
         }
 
-        if (listaDeMensagens[i].type === "private_message"){
-            ulChat.innerHTML +=  
-                ` <li>
-                    <div class="message reservada">
-                        <span><strong class="hora">(${listaDeMensagens[i].time})</strong> <b> ${listaDeMensagens[i].from}  </b> reservadamente para <b>${listaDeMensagens[i].to}:</b> ${listaDeMensagens[i].text}</span>
-                    </div>
-                </li>`;
+        else if (listaDeMensagens[i].type === "private_message"){
+            if(listaDeMensagens[i].to === nomeEscolhido){
+                ulChat.innerHTML +=  
+                    ` <li>
+                        <div class="message reservada">
+                            <span><strong class="hora">(${listaDeMensagens[i].time})</strong> <b> ${listaDeMensagens[i].from}  </b> reservadamente para <b>${listaDeMensagens[i].to}:</b> ${listaDeMensagens[i].text}</span>
+                        </div>
+                    </li>`;
+            }
         }
-        if (listaDeMensagens[i].type === "message"){
+        else {
             ulChat.innerHTML +=  
                 `<li>    
                     <div class="message">
@@ -76,7 +79,9 @@ function mensagensChegaram(resposta){
         }
     }
         //console.log(ulChat.innerHTML.length);
-
+        ultimaMSG = ulChat.lastElementChild;
+        console.log(ultimaMSG);
+        ativarRolagem();
 }
 
 function mostrarErro(erro){
@@ -99,10 +104,7 @@ function adicionarMensagem(){
     segundaPromessa.catch(mostrarErro);
 }
 
-let ultimaMSG = ulChat.lastElementChild;
-console.log(ultimaMSG);
-
-//function scrollToBottom() {
-  //element.scrollIntoView(false);
-//}
+function ativarRolagem() {
+    ultimaMSG.scrollIntoView();
+}
 
